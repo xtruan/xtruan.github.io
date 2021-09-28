@@ -1,0 +1,92 @@
+<!doctype html><html lang=en-us>
+<head>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=manifest href=/images/site.webmanifest>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Struan Clark">
+<title>Adding an SSH Key to the Windows System Account for Git | Struan</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=stylesheet href=/css/theme-override.css>
+<header>
+<nav>
+<ul>
+<li class=pull-left>
+<a href=/>~/struan</a>
+</li>
+<li class=pull-left>
+<a href=/categories/blog/>~/blog</a>
+</li>
+<li class=pull-left>
+<a href=/tags/>~/tags</a>
+</li>
+<li class=pull-right>
+<a href=/index.xml>~/subscribe</a>
+</li>
+</ul>
+</nav>
+</header>
+</head>
+<body>
+<br>
+<div class=article-meta>
+<h1><span class=title>Adding an SSH Key to the Windows System Account for Git</span></h1>
+<p class="author date"><i>By: Struan Clark on 2017/05/29</i></p>
+<span class="tags terms">
+<a href=/tags/git>git</a> <a href=/tags/gitlab>GitLab</a> <a href=/tags/ssh>ssh</a> <a href=/tags/windows>Windows</a>
+</p>
+</div>
+<div class=content-wrapper>
+<main>
+<p>I ran into an interesting Windows quirk recently. I set up a spare Windows 7 box as a <a href=https://docs.gitlab.com/runner/>GitLab-CI Runner</a> to see if it was any better than an existing Jenkins-based pipeline. The runner is pretty easy to set up, a few commands and I had it set up as a service running under Windows built in Local System account - the recommended configuration.</p>
+<p>I configured the runner to clone a master repo (set up as a public repo in GitLab) and run some build scripts. One of those scripts checks out a submodule which comes from another GitLab repo, but this one&rsquo;s permissions are set to internal. This caused the script to barf because internal repos in GitLab require authentication.</p>
+<p>Authorizing a user is usually pretty simple. Just run <code>ssh-keygen</code> in Git Bash, copy the public key into the appropriate area in GitLab, and you&rsquo;re off to the races. But how do you do this for the <em>built in</em> account in Windows? I got it to work by mucking around with <a href=https://ss64.com/nt/sc.html>SC.exe</a>, otherwise known as Service Control. The trick was to create a service that&rsquo;s sole purpose is to spawn a Command Prompt. After you have that the rest is easy. Use the prompt to launch a Git shell, generate the SSH key, and copy it to GitLab. Here are the full steps I followed:</p>
+<ol>
+<li>
+<p>Open an Administrator Command Prompt. The easiest way to do this in my opinion is to pop open the Start menu, search for <code>cmd</code>, right-click it, and select &ldquo;Run as Administrator&rdquo;.</p>
+</li>
+<li>
+<p>Now the big one. This command creates, launches, and cleans up the service<sup><a href=#footnote1>1</a></sup>. I called mine <code>svc</code>, but you can choose anything here:</p>
+<pre><code> sc create svc binpath=&quot;cmd /K start&quot; type=own type=interact &amp;&amp; sc start svc &amp; sc delete svc
+</code></pre>
+</li>
+<li>
+<p>This will pop up a dialog in the background asking you to &ldquo;View the message&rdquo;. Click that to switch over to the session with your system command prompt. This session is barebones. No fancy theming and no Desktop, just a single Command Prompt and a matching dialog to get you back to the main session.</p>
+</li>
+<li>
+<p>Run Git Bash in the Local System session by running the following:</p>
+<pre><code> &quot;C:\Program Files\Git\bin\sh&quot; -login -i
+</code></pre>
+</li>
+<li>
+<p>After that, run <code>ssh-keygen</code> as normal. When the SSH key is generated, use the dialog to switch back to the main session.</p>
+</li>
+<li>
+<p>Browse to the home directory of the local system account. This should be at <code>C:\Windows\System32\config\systemprofile</code><sup><a href=#footnote2>2</a></sup>. Once you&rsquo;re here, open up the <code>id_rsa.pub</code> file in the <code>.ssh</code> folder.</p>
+</li>
+<li>
+<p>Copy the contents of this file to the relevant area in the GitLab web interface. I just added it to my regular profile which works for testing, but is probably pretty bad practice for the long term. I&rsquo;d recommend creating a dedicated user on GitLab with the proper access to the project and giving it the SSH key.</p>
+</li>
+<li>
+<p>Use the same window as before to flip back to the Local System session to try it out. Run <code>ssh git@GITLAB-HOST</code> subbing in your real hostname here. If everthing worked, it will authenticate and you can add it as a known host.</p>
+</li>
+<li>
+<p>Run <code>exit</code> to quit the Git shell, then <code>exit</code> again to quit the Command Prompt. This will stop the service from requesting attention after switching back to the main session.</p>
+</li>
+</ol>
+<hr>
+<p><a name=footnote1>1</a>: This command did throw up a big warning indicating that the interactive service mode is deprecated. It worked for me on Windows 7, but the same command didn&rsquo;t work when I tested it on Windows 10 unfortunately.</p>
+<p><a name=footnote2>2</a>: This is the default path. You can verify it on your system by running <code>echo %USERPROFILE%</code> from the Local System session.</p>
+<a href=/> >> Home</a>
+</main>
+</div>
+<footer>
+<script>(function(){var b,a;function c(e){var c=document.getElementsByTagName(e),b,d,a;for(b=0;b<c.length;b++)if(d=c[b],a=d.parentElement,a.childNodes.length===1){if(a.nodeName==='A')if(a=a.parentElement,a.childNodes.length!=1)continue;a.nodeName==='P'&&(a.style.textAlign='center')}}b=['img','embed','object'];for(a=0;a<b.length;a++)c(b[a])})()</script>
+<hr>
+Struan Clark
+</footer>
+</body>
+</html>

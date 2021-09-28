@@ -1,0 +1,107 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Struan Clark | Portfolio >> Track Independent Train Mapping and Identification</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+	
+	<!-- Scripts -->
+	<script type="text/javascript" src="js/jquery.min.1.4.1.js"></script>
+	<script type="text/javascript" src="js/jquery.roundabout-1.0.min.js"></script> 
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.roundabout-shapes-1.1.js"></script>
+	<script type="text/javascript">			
+		$(document).ready(function() { //Start up our Project Preview Carosuel
+			$('ul#folio_scroller').roundabout({
+				easing: 'easeOutInCirc',
+				shape: 'waterWheel',
+				duration: 600
+			});
+		});
+	</script>  
+	<!--[if IE 6]>
+	<script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>
+	  /* EXAMPLE */
+	  DD_belatedPNG.fix('.button');
+	  
+	  /* string argument can be any CSS selector */
+	  /* .png_bg example is unnecessary */
+	  /* change it to what suits you! */
+	</script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<div id="wrapper" class="container_12 clearfix">
+
+
+		<!-- Text Logo -->
+		<h1 id="logo" class="grid_4">Struan Clark</h1>
+		
+		<!-- Navigation Menu -->
+		<ul id="navigation" class="grid_8">
+			<li><a href="contact.html"><span class="meta">Get in touch</span><br />Contact</a></li>
+			<li><a href="resume.html"><span class="meta">My resume (PDF)</span><br />Resume</a></li>
+			<li><a href="portfolio.html" class="current"><span class="meta">My latest work</span><br />Portfolio</a></li>	
+			<li><a href="about.html"><span class="meta">Who am I?</span><br />About</a></li>
+			<li><a href="index.html"><span class="meta">Homepage</span><br />Home</a></li>
+		</ul>
+		
+		
+		<div class="hr grid_12 clearfix">&nbsp;</div>
+			
+		<!-- Catch Line and Link -->
+			<h2 class="grid_12 caption clearfix">My <span>portfolio</span>, home to my latest, and greatest work.</h2>
+		
+		<div class="hr grid_12 clearfix">&nbsp;</div>
+		
+		<!-- Column 1 / Project Information -->
+		<div class="grid_4">
+		<!-- <a class="meta" href="#">www.siteurlgoeshere.com</a> -->
+		<h4 class="title">Track Independent Train Mapping and Identification</h4>
+		<div class="hr dotted clearfix">&nbsp;</div>
+			<p>I collaborated on a train mapping and identification system involving many interconnected embedded systems. The system was capable of identifying the engine and freight cars in a passing train as well as capable of mapping a track. Identification of the engine and freight cars was "learned" from an RFID reader in conjunction with RFID cards mounted on the side of train cars. The layout of the track as well as any problem or rough areas in the track was "learned" using a accelerometer board mounted on a freight car. This board transmitted accelerometer data wirelessly to a receiver board track-side. A control application running on a Spartan-3E board monitored messages transmitted via the I<sup>2</sup>C protocol from all boards and hosted a web server to display information to users. The system was independent of the track layout and specific composition of engines and freight cars.</p>	
+			<p><a href="docs/embedded/StruanClark_EmbeddedFinalReport.pdf">Final Report (PDF)</a></p>
+			<p><a href="docs/embedded/StruanClark_PCBDesigns.pdf">Printed Circuit Board Designs (PDF)</a></p>
+			<p><a href="http://www.youtube.com/watch?v=N1g-zk9ENRw">Video Overview (YouTube Link)</a></p>
+			<p class="clearfix">
+				<a href="portfolio.html" class="button float">&lt;&lt; Back to Portfolio</a>
+			</p>
+		</div>
+		
+		<!-- Column 2 / Image Carosuel -->
+		<div id="folio_scroller_container" class="grid_8 cleafix">
+			<ul id="folio_scroller"> 
+					<li><span>Embedded System Layout (click for full size)</span><a href="images/embedded/EmbeddedSystemLayout.png"><img alt="" src="images/system_layout.png" /></a></li> 
+					<li><span>RFID Board</span><img alt="" src="images/rfid_board.png" /></li> 
+					<li><span>RFID Board Design (click for full size)</span><a href="images/embedded/RFID_v1_brd_w.png"><img alt="" src="images/rfid_pcb.png" /></a></li> 
+					<li><span>RFID Board Schematic (click for full size)</span><a href="images/embedded/RFID_v1_sch.png"><img alt="" src="images/rfid_schematic.png" /></a></li> 
+					<li><span>Accelerometer Board</span><img alt="" src="images/accel_board.png" /></li> 
+					<li><span>Accelerometer Board Design (click for full size)</span><a href="images/embedded/Accel_v4_brd_w.png"><img alt="" src="images/accel_pcb.png" /></a></li> 
+					<li><span>Accelerometer Board Schematic (click for full size)</span><a href="images/embedded/Accel_v4_sch.png"><img alt="" src="images/accel_schematic.png" /></a></li> 
+					<li><span>XBee Receive Board</span><img alt="" src="images/xbee_receive.png" /></li> 
+					<li><span>Spartan-3E Board (click for full size)</span><a href="images/embedded/Spartan_3E.jpg"><img alt="" src="images/spartan_3e.png" /></a></li>
+			</ul> 
+		</div>
+		
+		<div class="hr grid_12 clearfix">&nbsp;</div>
+		
+		<!-- Client pickup line -->
+		<h2 class="grid_12 caption">Interested in this project? Want more information? <a href="contact.html"><span>Get in touch...</span></a></h2>
+		
+		<div class="hr grid_12 clearfix">&nbsp;</div>
+		
+		<!-- Footer -->
+		<p class="grid_12 footer clearfix">
+			<a class="float right" href="#">top</a>
+		</p>
+		
+	</div><!--end wrapper-->
+
+</body>
+</html>

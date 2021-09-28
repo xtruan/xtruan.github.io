@@ -1,0 +1,107 @@
+<!doctype html><html lang=en-us>
+<head>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/images/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/images/favicon-16x16.png>
+<link rel=manifest href=/images/site.webmanifest>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="Struan Clark">
+<title>Building an Animatronic Dinosaur | Struan</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=stylesheet href=/css/theme-override.css>
+<header>
+<nav>
+<ul>
+<li class=pull-left>
+<a href=/>~/struan</a>
+</li>
+<li class=pull-left>
+<a href=/categories/blog/>~/blog</a>
+</li>
+<li class=pull-left>
+<a href=/tags/>~/tags</a>
+</li>
+<li class=pull-right>
+<a href=/index.xml>~/subscribe</a>
+</li>
+</ul>
+</nav>
+</header>
+</head>
+<body>
+<br>
+<div class=article-meta>
+<h1><span class=title>Building an Animatronic Dinosaur</span></h1>
+<p class="author date"><i>By: Struan Clark on 2019/01/06</i></p>
+<span class="tags terms">
+<a href=/tags/projects>projects</a> <a href=/tags/hardware>hardware</a> <a href=/tags/software>software</a> <a href=/tags/robotics>robotics</a>
+</p>
+</div>
+<div class=content-wrapper>
+<main>
+<p>I&rsquo;m a huge fan of themed entertainment, especially the Disney parks. Theme park rides are some of the most interesting engineering marvels out there and the best part is - you can visit them! For me, the enjoyment of a trip to Walt Disney World comes as much from appreciating the technology and systems used to create rides as it does from the theming and story. A core part of many theme park rides are the animatronic characters that bring the experiences to life. I was recently gifted a Meccano Meccasaur - a toy with some limited &ldquo;smart&rdquo; functionality. I wanted to see how much I could augment this functionality if I added a new brain and some more points of articulation.</p>
+<h4 id=background>Background</h4>
+<p>Animatronics (Disney calls them Audio-Animatronics) are robots which are animated and whose movements are synchronized with an audio track. Historically, the &ldquo;attraction quality&rdquo; animatronics are hydraulically actuated, but some of the newer ones are fully electronic. They run the gamut from simple back and forth motions like the children in Disney&rsquo;s &ldquo;It&rsquo;s a Small World&rdquo; to the incredible <a href="https://www.youtube.com/watch?v=bkvYbp31hM8">Shaman of Songs</a> in Disney&rsquo;s Na&rsquo;vi River Journey (seriously: this thing is incredible, the motions are incredibly fluid and it really looks alive).</p>
+<p>The <a href="https://www.spinmaster.com/product_detail.php?pid=p20733">Meccasaur</a> is a robotic dinosaur toy that&rsquo;s Meccano&rsquo;s entrant into the recent &ldquo;smart toys&rdquo; craze. Out of the box it comes with an embedded microcontroller they call the &ldquo;Meccasaur Brain&rdquo; as well as a motorized module to move the head and legs and a multicolor LED module for eyes. By my reckoning, the Meccasaur components seem to be dumbed-down versions of the ones that ship with Mecanno&rsquo;s other, more programmable &ldquo;Meccanoid&rdquo; robots. The Meccasaur Brain for instance seems to be a &ldquo;hardwired to dinosaur&rdquo; version of the more customizable &ldquo;MeccaBrain&rdquo; that powers the other robots.</p>
+<h4 id=top-level-design>Top Level Design</h4>
+<p>I designed the control system for this project based on my understanding of how actual show control systems are set up. The core of this design is the seperation of concerns between the overall show controller managing the cues and the subsystems triggering the individual motions. For the high-level show controller, I selected a Raspberry Pi. This runs a Python program which transmits the cues to the low-level system triggering the motions and also plays the audio track. For the low-level system, I selected an Arduino. This runs a C++ program which operates the servos and LED eyes. The Raspberry Pi communicates with the Arduino using the <a href=https://en.wikipedia.org/wiki/I2C>I2C</a> (I-squared-C, or &ldquo;Inter-Integrated Circuit&rdquo;) protocol. I2C is a serial protocol used for connecting up microcontroller style devices. I chose it because it&rsquo;s well supported by the Raspberry Pi and Arduino via libraries. It also only requires two wires making the circuit design simple. The last time I used it was with <a href=/post/2015/12/13/track-independent-train-mapping-and-identification/>my train project</a>, so I got a kick out of coming back to it again!</p>
+<h4 id=parts-list>Parts List</h4>
+<p>I purchased a few new things to prepare for this project. I decided I wanted to go for a small footprint for the controllers so I got a Raspberry Pi Zero W (this is my 4th Raspberry Pi for those counting), a Mini Nano ATmega328P Arduino, and a five pack of cheap servo motors. I already had the UBEC from my <a href=/post/2016/01/04/ads-b-receiver-piaware/>ADS-B receiver project</a>. Below are the links for the products:</p>
+<ul>
+<li><a rel=nofollow href="https://www.amazon.com/gp/product/B06XCYGP27/ref=oh_aui_detailpage_o02_s00?ie=UTF8&psc=1">Raspberry Pi Zero W</a> - Amazon ~$24</li>
+<li><a rel=nofollow href="https://www.amazon.com/gp/product/B00NLAMS9C/ref=oh_aui_detailpage_o06_s00?ie=UTF8&psc=1">Mini Nano ATmega 328P Arduino</a> - Amazon ~$9</li>
+<li><a rel=nofollow href="https://www.amazon.com/gp/product/B015H5AVZG/ref=oh_aui_detailpage_o09_s00?ie=UTF8&psc=1">5 Pack J-Deal Micro Servo</a> - Amazon ~$12</li>
+<li><a rel=nofollow href="https://www.amazon.com/gp/product/B008ZNWOYY/ref=as_li_tl?ie=UTF8&psc=1">Hobbywing 5V/6V 3A Switch-mode UBEC</a> - Amazon ~$7</li>
+</ul>
+<h4 id=hardware-design>Hardware Design</h4>
+<p>The first step in prototyping the &ldquo;hardware&rdquo; was construction. I built the Meccasaur to the factory specs using the included instructions. They were pretty good and it was rewarding to go from a box of parts to a giant dinosaur.</p>
+<p><img src="/blog-static/animatronic-dinosaur/IMG_9418_mec_box_components_sm.jpg?lightbox&resize=700" alt><br><em>This will soon be a dinosaur</em></p>
+<p>I designed a schematic for this project using <a href=https://www.autodesk.com/products/eagle/overview>EAGLE</a>. This illustrates how the Pi and the Arduino connect to one another and to the three servos (one for the mouth, and one for each arm). The small rectangular component on the bottom left is the LED and embedded controller for the Meccasaur&rsquo;s eyes; more on that later.</p>
+<p><img src="/blog-static/animatronic-dinosaur/controller_schem1.png?lightbox&resize=700" alt><br><em>Project schematic</em></p>
+<p>I wanted to get spun up on the Arduino programming before the new parts I had ordered arrived so I started the project with a full sized Arduino Uno (actually a knockoff made by OSEPP) that I already had laying around. Since I didn&rsquo;t have any of the servos yet, I investigated what I could do with the existing Meccano hardware&mldr;</p>
+<p>All Meccano peripherals use a serial protocol called MeccaBrain. The Meccasaur isn&rsquo;t officially branded as a MeccaBrain-compatible product, but I figured that since they offer a three wire multicolor LED as part of MeccaBrain and the LED that came with the Meccasaur is a three-wire multicolor LED that it was probably the same thing, or at least compatible. Meccano nicely provides <a href=http://www.meccano.com/meccanoid-opensource>documentation and an Arduino library</a> to assist with interfacing with their products. I implemented this to talk to the LED, but from my testing it seemed unreliable at best. I had to send the MeccaBrain messages multiple times in order to get the LED to change colors, and even then sometimes it wouldn&rsquo;t change. With that experience in hand, I decided to not bother with the Meccasaur servos.</p>
+<p>Servo motors are pretty cool. They&rsquo;re a combination of a motor and a sensor that measures the motor&rsquo;s position. This allows for it to accurately rotate to a specified angle. By attaching things to the motor, you can make real-world objects respond directly to coded instructions. They&rsquo;re also inexpensive, so are a great way to get started with a project like this one. Most servos use a three-wire configuration for power, ground, and data. Using the Servo library provided by Arduino, they&rsquo;re very easy to interface with.</p>
+<p><img src="/blog-static/animatronic-dinosaur/IMG_9456_servo_sm.jpg?lightbox&resize=500" alt><br><em>J-Deal Micro Servo</em></p>
+<p>Once the J-Deal servos arrived I had to modify the Meccasaur to find a way to attach them. For the arms it was pretty easy, I removed them and just attached them by screwing them directly to the arm of the servo. For the mouth, I had to get a little more creative. I initially tried mounting the servo on the side of the jaw, to drive it directly, but <a href="https://www.youtube.com/watch?v=kom5TORWlLY">couldn&rsquo;t get it to work</a>. I then realized that the mouth naturally falls to an open position due to gravity. I ran some fishing line to the bottom jaw and attached it to a servo mounted behind the head. The servo lifts the jaw by pulling on the fishing line. It worked great and turned out to be a more aesthetically pleasing location for the servo to go anyway.</p>
+<p><img src="/blog-static/animatronic-dinosaur/DSC00768_arm_servo_sm.jpg?lightbox&resize=700" alt><br><em>Arm mounted directly on servo</em></p>
+<p><img src="/blog-static/animatronic-dinosaur/DSC00766_mouth_servo_1_sm.jpg?lightbox&resize=700" alt><br><em>Servo connected to mouth with fishing line</em></p>
+<p>I ordered a Raspberry Pi Zero W without pins attached. I determined that if I attached a minimal amount of pins to the Pi I could make it fit on the same small breadboard as the Mini Arduino. Time to break out the soldering iron!</p>
+<p><img src="/blog-static/animatronic-dinosaur/IMG_9430_soldering_sm.jpg?lightbox&resize=700" alt><br><em>My outdoor soldering station</em></p>
+<p><img src="/blog-static/animatronic-dinosaur/IMG_9438_raspi_soldering_sm.jpg?lightbox&resize=700" alt><br><em>First set of pins attached</em></p>
+<p><img src="/blog-static/animatronic-dinosaur/IMG_9439_raspi_soldered_sm.jpg?lightbox&resize=700" alt><br><em>All pins soldered</em></p>
+<p><img src="/blog-static/animatronic-dinosaur/IMG_9440_raspi_breadboard_sm.jpg?lightbox&resize=700" alt><br><em>Rasberry Pi attached to breadboard</em></p>
+<p>After attaching the pins to the Raspberry Pi and attaching it to the breadboard I flashed it with Raspbian and made sure it booted.</p>
+<p><img src="/blog-static/animatronic-dinosaur/IMG_9442_raspi_boot_up_sm.jpg?lightbox&resize=500" alt><br><em>Boot up success!</em></p>
+<p>The final hardware step was to put it all together. I attached the Arduino to the breadboard along with the Pi and wired it up.</p>
+<p><img src="/blog-static/animatronic-dinosaur/DSC00773_final_hardware_sm.jpg?lightbox&resize=700" alt><br><em>Hardware connected; red and black wires are power and ground and brown in the middle are I2C</em></p>
+<p><img src="/blog-static/animatronic-dinosaur/IMG_9453_arduino_raspi_powered_ubec_2_sm.jpg?lightbox&resize=700" alt><br><em>Plugged in and powered up</em></p>
+<p>With the hardware configured, it was time to write the software for both boards.</p>
+<h4 id=software-design>Software Design</h4>
+<p>I developed three programs to control the animatronic. <code>action_recorder</code>, <code>control</code>, and <code>actuator</code>.</p>
+<p><img src="/blog-static/animatronic-dinosaur/SoftwareArch.PNG?lightbox&resize=850" alt><br><em>Software architecture</em></p>
+<p><code>action_recorder</code> is a Python program that runs on the Raspberry Pi. It provides the user the ability to easily generate timing cues for the animatronic. I initially didn&rsquo;t plan on writing this program, just recording the cues manually. After attempting to synchronize some mouth movements manually with the audio track, I realized it would be much more efficient to write something that would allow for easily recording a &ldquo;rough cut&rdquo; of the motion which I could then fine tune later. The program is pretty simple: the user executes it at the same time as starting the audio track. As the audio plays, the user presses the space bar to annotate when the mouth should open. The specified cues are then timestamped and recorded to a CSV file which the <code>control</code> program can interpret. These cues aren&rsquo;t perfect, but it&rsquo;s a lot easier to fine tune them than generating them manually.</p>
+<p><code>control</code> is a Python program that also runs on the Raspberry Pi. It acts as the primary show control program for the animatronic. Cues are loaded from a CSV file into memory and then continually checked against a timer. Once the appropriate time for any given cue occurs, it is translated into a message that is transmitted over I2C to the <code>actuator</code> program running on the Arduino. I selected I2C as the protocol to connect these devices as it is an industry standard and has good support on both the Python/Raspberry Pi and Arduino sides. The SMBus Python library provides the I2C capability on the Raspberry Pi side.</p>
+<p><code>actuator</code> is a C++ program that runs on the Arduino. It converts the actual cue messages received over I2C from <code>control</code> into the actual electrical signals to drive the servos and LED. The I2C messages each contain three fields: a type field, an ID field, and a setting field. The type field indicates the device category, <code>L</code> for Arduino LED, <code>M</code> for Meccasaur LED, and <code>S</code> for servo. The ID field indicates a specific device number for a type. The setting field is contextually based on the device type and is used to actually configure the device state. For the Arduino LED, this is a simple on/off. For the Meccasaur LED, one of seven colors can be selected. Finally, and most importantly, the servo angle can be selected. This is used to control the arms and mouth. I was able to interface with I2C using the Wire library provided for Arduino and the servos with the Servo library. Servos work using PWM (pulse-width modulation) signals to indicate position. As such, they must be connected to PWM capable pins on the Arduino. I wrote my code to handle up to five servos, each attached to a PWM pin, even though I only ended up using three.</p>
+<p>All the code for this project is available on GitHub, here: <a href=https://github.com/xtruan/animatronic-control>https://github.com/xtruan/animatronic-control</a>.</p>
+<h4 id=testing>Testing</h4>
+<p>For testing I wanted to do something fun that would also lend itself reasonably well to animation. I was able to find the on-ride audio for Disney&rsquo;s <a href=https://en.wikipedia.org/wiki/Journey_into_Imagination_with_Figment>Journey into Imagination with Figment</a> and figured that was a great candidate. EPCOT is my favorite park at Walt Disney World, and Figment is all about setting your imagination free so I figured he would be a good fit. Plus I could set my dinosaur&rsquo;s eyes to be yellow, so that was an added bonus!</p>
+<p>The below video repeats the same section of animation twice. In the first section, I dubbed the audio over the video as the super cheap servos I used turned out to be&mldr; cheap. They weren&rsquo;t great at maintaining their position under load and as a result tended to vibrate around the position and vibrate LOUDLY. The second section uses a microphone and actually records the audio track to demonstrate the actual synchronization. However the servo noise is loud enough that it competes with the audio playback in that section.</p>
+<iframe style=width:650px;height:380px;border:none src=https://www.youtube-nocookie.com/embed/Xdeaxh2WyqI frameborder=0 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<h4 id=final-thoughts>Final Thoughts</h4>
+<p>I had a great time with this project. I really think the control system I came up with is pretty representative of how a system like this operates in the real world. With that said, there&rsquo;s definitely a few things that I would change if I were to do it again:</p>
+<ul>
+<li><strong>Buy better servos</strong> - The servos I bought were cheap, but they were barely up to the job for moving the arms. The arms were too heavy to be effectively driven by the servos directly. Next time I&rsquo;d either find a better way to attach them, or use beefier servos.</li>
+<li><strong>Do more experimentation with the Meccasaur drive motor</strong> - The Meccasaur came with a drive motor assembly that was powerful enough to move it around with. I should&rsquo;ve done some more experimentation with it to see what was possible. The lack of documentation and general dumbed-down-ness for the Meccasaur was pretty disappointing, especially since it looks great.</li>
+</ul>
+<a href=/> >> Home</a>
+</main>
+</div>
+<footer>
+<script>(function(){var b,a;function c(e){var c=document.getElementsByTagName(e),b,d,a;for(b=0;b<c.length;b++)if(d=c[b],a=d.parentElement,a.childNodes.length===1){if(a.nodeName==='A')if(a=a.parentElement,a.childNodes.length!=1)continue;a.nodeName==='P'&&(a.style.textAlign='center')}}b=['img','embed','object'];for(a=0;a<b.length;a++)c(b[a])})()</script>
+<hr>
+Struan Clark
+</footer>
+</body>
+</html>

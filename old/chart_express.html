@@ -1,0 +1,105 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Struan Clark | Portfolio >> Chart Express for Android</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/styles.css" />
+	
+	<!-- Scripts -->
+	<script type="text/javascript" src="js/jquery.min.1.4.1.js"></script>
+	<script type="text/javascript" src="js/jquery.roundabout-1.0.min.js"></script> 
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+	<script type="text/javascript" src="js/jquery.roundabout-shapes-1.1.js"></script>
+	<script type="text/javascript">			
+		$(document).ready(function() { //Start up our Project Preview Carosuel
+			$('ul#folio_scroller').roundabout({
+				easing: 'easeOutInCirc',
+				shape: 'waterWheel',
+				duration: 600
+			});
+		});
+	</script>  
+	<!--[if IE 6]>
+	<script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+	<script>
+	  /* EXAMPLE */
+	  DD_belatedPNG.fix('.button');
+	  
+	  /* string argument can be any CSS selector */
+	  /* .png_bg example is unnecessary */
+	  /* change it to what suits you! */
+	</script>
+	<![endif]-->
+</head>
+
+<body>
+
+	<div id="wrapper" class="container_12 clearfix">
+
+
+		<!-- Text Logo -->
+		<h1 id="logo" class="grid_4">Struan Clark</h1>
+		
+		<!-- Navigation Menu -->
+		<ul id="navigation" class="grid_8">
+			<li><a href="contact.html"><span class="meta">Get in touch</span><br />Contact</a></li>
+			<li><a href="resume.html"><span class="meta">My resume (PDF)</span><br />Resume</a></li>
+			<li><a href="portfolio.html" class="current"><span class="meta">My latest work</span><br />Portfolio</a></li>	
+			<li><a href="about.html"><span class="meta">Who am I?</span><br />About</a></li>
+			<li><a href="index.html"><span class="meta">Homepage</span><br />Home</a></li>
+		</ul>
+		
+		
+		<div class="hr grid_12 clearfix">&nbsp;</div>
+			
+		<!-- Catch Line and Link -->
+			<h2 class="grid_12 caption clearfix">My <span>portfolio</span>, home to my latest, and greatest work.</h2>
+		
+		<div class="hr grid_12 clearfix">&nbsp;</div>
+		
+		<!-- Column 1 / Project Information -->
+		<div class="grid_4">
+		<!-- <a class="meta" href="#">www.siteurlgoeshere.com</a> -->
+		<h4 class="title">Chart Express for Android</h4>
+		<div class="hr dotted clearfix">&nbsp;</div>
+			<p>This app uses an HTTP GET to receive an image from Googe's Chart API. It formats a URL with input data and some options in order to generate the desired chart for the user.</p>
+			<p>The major tasks in designing this application were creating a working HTTP client that would download a binary image, and then making said HTTP client run in the background so as not to block the GUI thread.</p>
+			<p>I created a simple HTTP client which is able to process and return the results of an HTTP GET from a given URL. This information is converted to a Drawable for display within the application.</p>
+			<p>To run the task in the background, I utilized the AsyncTask android library which allows a process to be assigned a thread from Android's thread pool as to not block the GUI thread. I believe this is the best way to accomplish this task, as creating a new thread to execute the HTTP client could lead to inefficiency from having too many threads operating concurrently.</p>
+			<p>The Drawable is converted to a Bitmap so it can be saved/sent as a JPEG. The chart.jpg file is stored in the DCIM folder on an Android device's SD card. The chart.jpg can be sent via the ACTION_SEND intent, which allows it to be sent by any application on the device that can handle an image (such as email or mms messenger).</p>	
+			<p>Chart Express QR Market Link:<br/><img src="images/qr_chartexpress.png" alt="Chart Express QR Market Link"/></p>
+			<p class="clearfix">
+				<a href="portfolio.html" class="button float">&lt;&lt; Back to Portfolio</a>
+			</p>
+		</div>
+		
+		<!-- Column 2 / Image Carosuel -->
+		<div id="folio_scroller_container" class="grid_8 cleafix">
+			<ul id="folio_scroller"> 
+					<li><span>Chart Express for Android</span><img alt="" src="images/chart_express.png" /></li> 
+					<li><span>Sample Bar Chart</span><img alt="" src="images/result_bar.png" /></li> 
+					<li><span>Sample Line Chart</span><img alt="" src="images/result_line.png" /></li> 
+					<li><span>Sample Pie Chart</span><img alt="" src="images/result_pie.png" /></li> 
+					<li><span>Sample QR Code</span><img alt="" src="images/result_qr.png" /></li>
+			</ul> 
+		</div>
+		
+		<div class="hr grid_12 clearfix">&nbsp;</div>
+		
+		<!-- Client pickup line -->
+		<h2 class="grid_12 caption">Interested in this project? Want more information? <a href="contact.html"><span>Get in touch...</span></a></h2>
+		
+		<div class="hr grid_12 clearfix">&nbsp;</div>
+		
+		<!-- Footer -->
+		<p class="grid_12 footer clearfix">
+			<a class="float right" href="#">top</a>
+		</p>
+		
+	</div><!--end wrapper-->
+
+</body>
+</html>
