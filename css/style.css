@@ -195,12 +195,11 @@ img, iframe, video {
 }
 
 main {
-  hyphens: auto;
+  hyphens: manual;
   max-width: 650px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.7em;
-  hyphens: auto;
   display: block;
   font-size: 1.1em;
 }
