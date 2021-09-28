@@ -43,7 +43,9 @@
 <main>
 <p>SSL, or Secure Sockets Layer, is one of the technologies essential to security on the web. It allows a web browser and server to form an encrypted connection. Encryption is an essential part of web security. If you&rsquo;re browsing the web in a coffee shop or airport without encryption, it&rsquo;s trivial for anyone else to see exactly what you&rsquo;re looking at.</p>
 <p>Luckily, SSL is becoming more and more prevalent thanks to efforts by internet companies and a better understanding of why security is important among users. Most browsers have also started advertising that sites without SSL are insecure. The images below show what websites that are using SSL look like on Google Chrome vs. those that are not using SSL:</p>
-<p><img src=/blog-static/ssl-with-letsencrypt-on-aws-ec2/https_bar.PNG alt="Using SSL"><img src=/blog-static/ssl-with-letsencrypt-on-aws-ec2/vs_bar_w.png alt=vs.><img src=/blog-static/ssl-with-letsencrypt-on-aws-ec2/http_bar.PNG alt="Not using SSL"></p>
+<p><img src=/blog-static/ssl-with-letsencrypt-on-aws-ec2/https_bar.PNG alt="Using SSL"></p>
+<p style=text-align:center>vs.</p>
+<p><img src=/blog-static/ssl-with-letsencrypt-on-aws-ec2/http_bar.PNG alt="Not using SSL"></p>
 <p>SSL works by using a certificate issued by a trusted certificate authority (CA) being installed on the web server. Traditionally these certificates were not free and were complicated to configure. That changed with the introduction of the <a href=https://letsencrypt.org/>Let&rsquo;s Encrypt CA</a>. Let&rsquo;s Encrypt provides free SSL certificates along with an associated software package to automatically install and update them - very cool.</p>
 <h3 id=prerequisites>Prerequisites</h3>
 <p>This guide assumes that you have a domain name pointed at an AWS EC2 instance running Amazon Linux. This instance should be set up with the Apache web server and you should have access via SSH. If you don&rsquo;t have this setup, the following steps will not work.</p>
