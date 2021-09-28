@@ -229,7 +229,7 @@ blockquote {
   #foxy {
     min-width: 40px;
     float: center;
-    padding: 10px 10px 10px 20px;
+    padding: 10px 10px 10px 10px;
     display: block;
   }
 }
