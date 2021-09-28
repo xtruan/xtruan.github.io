@@ -10,13 +10,13 @@
     }
 
     a {
-      color: #EBC3DB;
+      color: #1BB3E9;
     }
 
     .tags a {
       display: inline-block;
       font-size: 0.8rem;
-      border: 1px solid #EBC3DB;
+      border: 1px solid #1BB3E9;
       border-radius: 3px;
       padding: 0.1rem 0.4rem;
       margin-bottom: 0.2rem;
@@ -25,7 +25,7 @@
 
     header {
       background: #393E41;
-      border-bottom: 2px dotted #EBC3DB;
+      border-bottom: 2px dotted #1BB3E9;
 
     }
 
@@ -48,18 +48,23 @@
 
 /* Light mode */
 @media (prefers-color-scheme: light) {
+    body {
+      background-color: #f9f9f9;
+      color: black;
+    }
+  
     blockquote {
       background: #f9f9f9;
     }
 
     a {
-      color: #613DC1;
+      color: #1BB3E9;
     }
 
     .tags a {
       display: inline-block;
       font-size: 0.8rem;
-      border: 1px solid #613DC1;
+      border: 1px solid #1BB3E9;
       border-radius: 3px;
       padding: 0.1rem 0.4rem;
       margin-bottom: 0.2rem;
@@ -67,11 +72,11 @@
     }
 
     header {
-      background: #613DC1;
+      background: #1BB3E9;
     }
 
     .article-meta, .menu a {
-      background: #E8DBC5;
+      background: #f9f9f9;
       color: #000;
     }
 
