@@ -1,4 +1,4 @@
-# xtruan.github.io (https://struanclark.com)
+# xtruan.github.io - https://struanclark.com
 Personal website and blog built using [Hugo](https://gohugo.io) + deployed to GitHub Pages using GitHub Actions
 
 [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
