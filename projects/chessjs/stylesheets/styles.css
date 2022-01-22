@@ -1,0 +1,137 @@
+#versionLink {
+	margin-left: 10px;
+	font-size: small;
+}
+
+#LoadingBook {
+	position: absolute;
+	left: 0px;
+	top: 100px;	
+	display: none;
+}
+
+#Board {
+	position: relative;
+	left: 0px;
+	top: 0px;
+	width: 960px;
+	height: 960px;
+	border-style: solid;
+  	border-width: 2px;
+}
+
+#GameControls {
+	position: absolute;
+	top: 1000px;	
+	left: 60px;
+	font-size: medium;
+}
+
+#EngineOutput {
+	position: absolute;
+	top: 1100px;	
+	left: 60px;
+	font-size: medium;
+	display: none;
+}
+
+#CurrentFenDiv {
+	position: absolute;
+	top: 1180px;
+	left: 60px;
+	font-size: medium;
+	display: none;
+}
+
+#FenInDiv {
+	position: absolute;
+	top: 1260px;
+	left: 60px;
+	font-size: medium;
+	display: none;
+}
+
+#fenIn { 
+  width: 900px;
+  left: 60px;
+}
+
+#ThinkingImageDiv {
+	position: absolute;
+	top: 1400px;
+	left: 600px;
+	display: none;
+}
+
+#ThinkingPng {
+	width: 50px;
+	height: 30px;
+}
+
+
+
+.Piece {
+	position: absolute;
+}
+
+.Square {
+	position: absolute;	
+	width: 120px;
+	height: 120px;
+}
+
+.Light {
+	background-color:#5fbcd3;
+}
+
+.Dark {
+	background-color:#afdde9;
+}
+
+.SqSelected {
+	background-color:#216778;
+}
+
+.clickElement { cursor:pointer }
+
+.rank1 { top: 840px; }
+.rank2 { top: 720px; }
+.rank3 { top: 600px; }
+.rank4 { top: 480px; }
+.rank5 { top: 360px; }
+.rank6 { top: 240px; }
+.rank7 { top: 120px; }
+.rank8 { top: 0px; }
+
+.file1 { left: 0px; }
+.file2 { left: 120px; }
+.file3 { left: 240px; }
+.file4 { left: 360px; }
+.file5 { left: 480px; }
+.file6 { left: 600px; }
+.file7 { left: 720px; }
+.file8 { left: 840px; }
+
+.rank8flip { top: 840px; }
+.rank7flip { top: 720px; }
+.rank6flip { top: 600px; }
+.rank5flip { top: 480px; }
+.rank4flip { top: 360px; }
+.rank3flip { top: 240px; }
+.rank2flip { top: 120px; }
+.rank1flip { top: 0px; }
+
+.file8flip { left: 0px; }
+.file7flip { left: 120px; }
+.file6flip { left: 240px; }
+.file5flip { left: 360px; }
+.file4flip { left: 480px; }
+.file3flip { left: 600px; }
+.file2flip { left: 720px; }
+.file1flip { left: 840px; }
+
+
+
+
+
+
