@@ -28,31 +28,25 @@
 }
 
 #EngineOutput {
-	position: absolute;
-	top: 1100px;	
-	left: 60px;
+	margin-top: 20px;
 	font-size: medium;
 	display: none;
 }
 
 #CurrentFenDiv {
-	position: absolute;
-	top: 1180px;
-	left: 60px;
+	margin-top: 20px;
 	font-size: medium;
 	display: none;
 }
 
 #FenInDiv {
-	position: absolute;
-	top: 1260px;
-	left: 60px;
+	margin-top: 20px;
 	font-size: medium;
 	display: none;
 }
 
 #fenIn { 
-  width: 900px;
+  width: 840px;
   left: 60px;
 }
 
