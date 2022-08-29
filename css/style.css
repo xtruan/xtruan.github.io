@@ -1,12 +1,12 @@
 /* Dark mode */
 @media (prefers-color-scheme: dark) {
     body {
-        background-color: #393E41;
+        background-color: rgb(29, 33, 44);
         color: white;
     }
 
     blockquote {
-      background: #393E41;
+      background: rgb(29, 33, 44);
     }
 
     a {
@@ -24,13 +24,13 @@
     }
 
     header {
-      background: #393E41;
+      background: rgb(29, 33, 44);
       border-bottom: 2px dotted #1BB3E9;
 
     }
 
     .article-meta, .menu a {
-      background: #393E41;
+      background: rgb(29, 33, 44);
       color: white;
     }
 
@@ -93,7 +93,7 @@
 
 
 body {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: .2em;
   line-height: 1.5em;
